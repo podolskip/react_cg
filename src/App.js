@@ -1,31 +1,90 @@
 import * as React from 'react';
 import './App.css';
+import Radium from 'radium';
 import  Person from './Person/Person';
 class App extends React.Component {
   state = {
     persons: [
-      { name: 'max', age: 30 },
-      { name: 'Namu', age: 29 },
-      { name: 'Sue', age: 26 }
+      { id: '1', name: 'max', age: 30 },
+      { id: '2', name: 'Namu', age: 29 },
+      { id: '3', name: 'Sue', age: 26 }
     ]
   };
 
-  swithNameHandler = () => {
-    console.log('works!');
+  nameChangedHandler = (id,val) => {
+    const personsFromState = [...this.state.persons];
+    personsFromState[id].name = val;
+
+    this.setState({persons: personsFromState});
+  }
+
+  deletePersonHandler = (id) => {
+    const personsFromState = [...this.state.persons];
+    personsFromState.splice(id,1);
+
+    this.setState({persons: personsFromState});
+  }
+
+  togglePersonsHandler = () => {
+    this.setState({showPersons:!this.state.showPersons});
   }
   render() {
+    const styleBtn = {
+      backgroundColor: 'green',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
+    };
+
+    let persons = null;
+
+    if (this.state.showPersons) {
+      styleBtn.backgroundColor = 'red';
+      styleBtn[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'yellow'
+      };
+
+      persons = (
+        <div >
+          {this.state.persons.map( (item, index) => {
+            return <Person
+              key={item.id }
+              name={item.name}
+              age={item.age}
+              changed={(val) => this.nameChangedHandler(index,val)}
+              click={ () => this.deletePersonHandler(index)}
+            ></Person>;
+          } )}
+        </div>
+      );
+    }
+
+    let classes = [];
+    if (this.state.persons.length <= 2){
+      classes.push('red');
+    } 
+    
+    if (this.state.persons.length <= 1){
+      classes.push('bold');
+    }
+    
+
     return (
       <div className="App">
-        {/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p> */}
-        <h1 > Works fine !</h1>
-        <button onClick={this.swithNameHandler}>Swith Names</button>
-        <Person name={this.state.persons[0].name} >Mz hobbies Are: Running</Person>
+        <p className={classes.join(' ')}> Works fine !</p>
+        <button 
+          style={styleBtn} 
+          onClick={this.togglePersonsHandler}
+        >Switch Names
+        </button>
+        {persons}
+        
         
       </div>
     );
@@ -33,4 +92,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Radium(App);
