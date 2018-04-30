@@ -8,8 +8,14 @@ class  Person extends React.Component  {
   }
 
   render () {
+    const style = {
+      '@media (min-width: 500px)': {
+        width: '450px'
+      }
+    }
+
     return (
-      <div className="Person">
+      <div className="Person" style={style}>
         <p onClick={this.props.click}>Hi I'm a person that's name is {this.props.name}</p>
         <input type="text" onChange={this.onBlur.bind(this)} value={this.props.name} />
       </div>
