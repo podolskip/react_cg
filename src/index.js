@@ -12,5 +12,5 @@ class Sth extends React.Component {
 
 export default Sth;
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App Title='React app' />, document.getElementById('root'));
 registerServiceWorker();
