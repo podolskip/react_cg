@@ -30,6 +30,8 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "no-console": ["error", { "allow": ["warn", "error", "log"] }],
+        "react/jsx-uses-vars": [2]      
     }
 }
