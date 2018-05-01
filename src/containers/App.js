@@ -24,9 +24,9 @@ class App extends React.PureComponent {
     };
   };
 
-  componentWillMount() {
-    console.log('[App.js] inside componentWillMount');
-  }
+  // componentWillMount() {
+  //   console.log('[App.js] inside componentWillMount');
+  // }
 
   componentDidMount() {
     console.log('[App.js] inside componentDidMount');
@@ -37,12 +37,23 @@ class App extends React.PureComponent {
   //   return true;
   // }
 
-  componentWillUpdate (nextProps, nextState) {
-    console.log('[App.js] inside WILL UPDATE',nextProps,nextState);
-  }
+  // componentWillUpdate (nextProps, nextState) {
+  //   console.log('[App.js] inside WILL UPDATE',nextProps,nextState);
+  // }
   
   componentDidUpdate (){
     console.log('[App.js] inside DID UPDATE');
+  }
+
+  // new react 16.3
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('[App.js] inside DERIVED',nextProps,prevState);
+    return prevState;
+  }
+  
+  getSnapshotBeforeUpdate(){
+    console.log('[App.js] inside SNAPSHOT');
+    return null;
   }
 
   nameChangedHandler = (id,val) => {
