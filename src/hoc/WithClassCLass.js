@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const WithClassFn = (WithClassComponent, classNames, classStyles) => {
+const WithClassClass = (WithClassComponent, classNames, classStyles) => {
   return class extends React.Component {
     render() {
       return (
@@ -11,4 +11,4 @@ const WithClassFn = (WithClassComponent, classNames, classStyles) => {
   };
 };
 
-export default WithClassFn;
+export default WithClassClass;

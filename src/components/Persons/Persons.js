@@ -5,6 +5,7 @@ import Person from './Person/Person';
 class Persons extends React.Component{
   constructor(props){
     super(props);
+    this.lastPersonRef = React.createElement;
   }
 
   componentWillReceiveProps (nextProps) {
@@ -29,7 +30,10 @@ class Persons extends React.Component{
       return <Person
         key={item.id }
         name={item.name}
+        position={index}
         age={item.age}
+        authenticated={this.props.isAuthenticated}
+        ref={this.lastPersonRef}
         changed={(val) => this.props.changed2(index,val)}
         click={ () => this.props.clicked(index)}
       ></Person>;

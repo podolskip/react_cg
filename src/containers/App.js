@@ -4,6 +4,9 @@ import Radium, { StyleRoot } from 'radium';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import WithClass from '../hoc/WithClass';
+
+export const AuthContext = React.createContext(false);
+
 class App extends React.PureComponent {
   constructor(props){
     super(props);
@@ -15,7 +18,9 @@ class App extends React.PureComponent {
         { id: '2', name: 'Namu', age: 29 },
         { id: '3', name: 'Sue', age: 26 }
       ],
-      showPersons: false
+      showPersons: false,
+      toggleClickCounter: 0,
+      authenticated: false
     };
   };
 
@@ -54,8 +59,22 @@ class App extends React.PureComponent {
     this.setState({persons: personsFromState});
   }
 
+  // set state is an ASYNC call and this is the best way to call state change!!!!
   togglePersonsHandler = () => {
-    this.setState({showPersons:!this.state.showPersons});
+    this.setState((prevState, props) => {
+      return {
+        showPersons:!prevState.showPersons,
+        toggleClickCounter: prevState.toggleClickCounter + 1
+      };
+    });
+  }
+
+  loginHandler = () => {
+    this.setState((pastState, props) => {
+      return {
+        authenticated: true
+      };
+    });
   }
   render() {
     console.log('[App.js] inside render');
@@ -66,6 +85,7 @@ class App extends React.PureComponent {
         persons={this.state.persons}
         clicked={this.deletePersonHandler}
         changed2={this.nameChangedHandler}
+        isAuthenticated={this.state.authenticated}
       />;
     }   
 
@@ -76,9 +96,12 @@ class App extends React.PureComponent {
           <Cockpit 
             clicked={this.togglePersonsHandler}
             persons={this.state.persons}
-            showPersons={this.state.showPersons}            
+            showPersons={this.state.showPersons} 
+            login={this.loginHandler}           
           />
-          {persons}
+          <AuthContext.Provider value={this.state.authenticated}>
+            {persons}
+          </AuthContext.Provider>
         </WithClass>
       </StyleRoot>
       
