@@ -3,7 +3,8 @@ import './App.css';
 import Radium, { StyleRoot } from 'radium';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
-class App extends React.Component {
+import WithClass from '../hoc/WithClass';
+class App extends React.PureComponent {
   constructor(props){
     super(props);
     console.log('[App.js] inside constructo',props);
@@ -26,6 +27,18 @@ class App extends React.Component {
     console.log('[App.js] inside componentDidMount');
   }
   
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   console.log('[App.js] inside should component UPDATE',nextProps,nextState);
+  //   return true;
+  // }
+
+  componentWillUpdate (nextProps, nextState) {
+    console.log('[App.js] inside WILL UPDATE',nextProps,nextState);
+  }
+  
+  componentDidUpdate (){
+    console.log('[App.js] inside DID UPDATE');
+  }
 
   nameChangedHandler = (id,val) => {
     const personsFromState = [...this.state.persons];
@@ -58,14 +71,15 @@ class App extends React.Component {
 
     return (
       <StyleRoot >
-        <div className="App">
+        <WithClass classes="App">
+          <button onClick={() => { this.setState({showPersons:true});}}>Show Persons</button>
           <Cockpit 
             clicked={this.togglePersonsHandler}
             persons={this.state.persons}
             showPersons={this.state.showPersons}            
           />
           {persons}
-        </div>
+        </WithClass>
       </StyleRoot>
       
     );

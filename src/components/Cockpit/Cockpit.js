@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Radium, { StyleRoot } from 'radium';
+import Aux from '../../hoc/Auxx';
 
 const cockpit = (props) => {
   let classes = [];
@@ -34,14 +35,14 @@ const cockpit = (props) => {
 
 
   return (
-    <div>
+    <Aux>
       <p className={classes.join(' ')}> Works fine !</p>
       <button 
         style={ styleBtn} 
         onClick={props.clicked}
       >Switch Names
       </button>
-    </div>
+    </Aux>
   );
 };
 
