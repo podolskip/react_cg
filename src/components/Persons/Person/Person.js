@@ -2,7 +2,15 @@
 import * as React from 'react';
 import './Person.css';
 import Radium from 'radium';
-import WithClass from '../../../hoc/WithClass';
+import WithClassFn from '../../../hoc/WithClassFn';
+import Aux from '../../../hoc/Auxx';
+
+const style = {
+  '@media (minwidth: 500px)': {
+    width: '450px'
+  }
+};
+
 class  Person extends React.Component  {
   constructor(props){
     super(props);
@@ -24,20 +32,14 @@ class  Person extends React.Component  {
 
   render () {
     console.log('[Person.js] inside render');
-    const style = {
-      '@media (minwidth: 500px)': {
-        width: '450px'
-      }
-    };
-
     return (
-      <WithClass classes="Person" styles={style}>
+      <Aux>
         <p onClick={this.props.click}>Hi I'm a person that's name is {this.props.name}</p>
         <input type="text" onChange={this.onBlur.bind(this)} value={this.props.name} />
-      </WithClass>
-      
+      </Aux>
+           
     );
   }
 }
 
-export default Radium(Person);
+export default WithClassFn(Radium(Person),'Person', style);
